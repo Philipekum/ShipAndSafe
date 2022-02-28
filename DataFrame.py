@@ -13,8 +13,3 @@ class DataConverter(Weather):
         self.converter_to_df().to_excel(writer, 'Sheet1', index=False)
         writer.save()
         return None
-
-
-if __name__ == '__main__':
-    pizda = DataConverter('9408138')
-    print(pizda.xlsx_maker())
