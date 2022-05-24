@@ -23,7 +23,7 @@
         </div>
         <div class="wrapper__header__block">
             <label>imo</label>
-            <input type="text" value="9408138">
+            <input type="text" value="9408138" id="inputmain">
             <button value="show">Show</button>
             <button value="save">Save as file</button>
         </div>
@@ -224,13 +224,26 @@
     mouseClick = 0
     document.querySelectorAll('.wrapper__header__block button')[0].addEventListener('click', function () {
         if (mouseClick == 0) {
-            let imo = document.querySelector('input').value
+            var InputValue = isNaN(document.getElementById("inputmain").value)
+            console.log(InputValue)
+            if(InputValue === false){
+                console.log()
+                var InputValueCheckInt = Number.isInteger(Number(document.getElementById("inputmain").value))
+                if(InputValueCheckInt === true){
+
+                let imo = document.querySelector('input').value
             getInfo(imo)
             showData(imo)
             initialize(imo)
             document.querySelector('.wrapper__container__map').style.display = 'block'
             document.querySelectorAll('.wrapper__header__block button')[0].innerHTML = 'Update'
             mouseClick++
+                }else{
+                    alert('IMO is not correct')
+                }
+            }else{
+                alert('IMO is not correct')
+            }
         } else {
             document.querySelectorAll('.wrapper__header__block button')[0].innerHTML = 'show'
             mouseClick--
