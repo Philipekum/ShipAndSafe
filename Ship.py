@@ -20,9 +20,8 @@ class Ship:
 
         return [f_lat, f_lon]
 
-    def expected_path(self, n=25):
+    def expected_path(self, n=6):
         path = []
         for i in range(n):
             path.append(self.future_position(i))
-
         return path
