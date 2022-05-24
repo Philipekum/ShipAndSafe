@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ship&Save</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Akshar:wght@500&family=Plus+Jakarta+Sans:wght@300&display=swap"
+          rel="stylesheet">
+    <script src="eel.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> -->
+    <!-- <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script> -->
+</head>
+<body>
+<div class="wrapper">
+    <div class="wrapper__header">
+        <div class="wrapper__header__block">
+            <img src="images/pic.png" alt="">
+            <h1>Ship&Save</h1>
+        </div>
+        <div class="wrapper__header__block">
+            <label>imo</label>
+            <input type="text" value="9408138">
+            <button value="show">Show</button>
+            <button value="save">Save as file</button>
+        </div>
+    </div>
+    <div class="wrapper__container">
+        <div class="wrapper__container__data">
+            <div class="wrapper__container__data__block d-none">
+                <div class="wrapper__container__data__block__date">
+                    <div class="wrapper__container__data__block__date__header">
+                        <img src="images/arrow.png" alt="">
+                        <p>2022-05-19</p>
+                    </div>
+                    <div class="wrapper__container__data__block__block">
+                        <div class="wrapper__container__data__block__info">
+                            <div class="wrapper__container__data__block__info__name">
+                                <p>wind speed (W-E)</p>
+                            </div>
+                            <div class="wrapper__container__data__block__info__r">
+
+                            </div>
+                            <div class="wrapper__container__data__block__info__value wind-u">
+                                <p>-4.913841364787743</p>
+                            </div>
+                            <!-- <div class="line"></div> -->
+                            <div class="wrapper__container__data__block__info__meaning wind-u-c"></div>
+                        </div>
+                        <div class="wrapper__container__data__block__info">
+                            <div class="wrapper__container__data__block__info__name">
+                                <p>wind speed (S-N)</p>
+                            </div>
+                            <div class="wrapper__container__data__block__info__value wind-v">
+                                <p>-4.913841364787743</p>
+                            </div>
+                            <!-- <div class="line"></div> -->
+                            <div class="wrapper__container__data__block__info__meaning wind-v-c"></div>
+                        </div>
+                        <div class="wrapper__container__data__block__info">
+                            <div class="wrapper__container__data__block__info__name">
+                                <p>gust</p>
+                            </div>
+                            <div class="wrapper__container__data__block__info__value gust">
+                                <p>-4.913841364787743</p>
+                            </div>
+                            <!-- <div class="line"></div> -->
+                            <div class="wrapper__container__data__block__info__meaning gust-c"></div>
+                        </div>
+                        <div class="wrapper__container__data__block__info">
+                            <div class="wrapper__container__data__block__info__name">
+                                <p>waves period</p>
+                            </div>
+                            <div class="wrapper__container__data__block__info__value waves_period">
+                                <p>-4.913841364787743</p>
+                            </div>
+                            <!-- <div class="line"></div> -->
+                            <div class="wrapper__container__data__block__info__meaning waves_period-c"></div>
+                        </div>
+                        <div class="wrapper__container__data__block__info">
+                            <div class="wrapper__container__data__block__info__name">
+                                <p>waves height</p>
+                            </div>
+                            <div class="wrapper__container__data__block__info__value waves_height">
+                                <p>-4.913841364787743</p>
+                            </div>
+                            <!-- <div class="line"></div> -->
+                            <div class="wrapper__container__data__block__info__meaning waves_height-c"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper__container__map">
+            <div class="wrapper__container__map__about">
+                <h3>Information</h3>
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+            <div class="wrapper__container__map__navig">
+                <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d18015.672155848726!2d37.3645464!3d55.63752705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sru!2sru!4v1653053708205!5m2!1sru!2sru" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
+                <!-- <div id="map_canvas"></div> -->
+                <iframe src="" height="500"></iframe>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper__footer">
+
+    </div>
+
+</div>
+</body>
+<script>
+
+    // 16-18
+    function setColor(kpis, elem, value, value2) {
+        if (kpis > value2) {
+            elem.style.backgroundColor = 'rgb(202, 27, 27)'
+            // red
+        } else {
+            if (kpis < value || kpis == 'None') {
+                elem.style.backgroundColor = 'rgb(20, 173, 66)'
+                // green
+            } else {
+                elem.style.backgroundColor = 'rgb(211, 168, 52)'
+                // orange
+            }
+        }
+    }
+
+    async function showData(imo) {
+        // let data = await eel.getWeather(imo)()
+        let data = [{
+            '2022-05-20 03:00:00': {
+                'wind_u': 26,
+                'wind_v': 0.85,
+                'gust': 41,
+                'waves_period': 5,
+                'waves_height': 10
+            }
+        }, {
+            '2022-05-20 06:00:00': {
+                'wind_u': 27,
+                'wind_v': -1.61,
+                'gust': 6.33,
+                'waves_period': 3,
+                'waves_height': 7
+            }
+        }, {
+            '2022-05-20 09:00:00': {
+                'wind_u': 17,
+                'wind_v': 1.37,
+                'gust': 10.13,
+                'waves_period': 1,
+                'waves_height': 3
+            }
+        }, {
+            '2022-05-20 12:00:00': {
+                'wind_u': -3.33,
+                'wind_v': 1.37,
+                'gust': 3.12,
+                'waves_period': 8,
+                'waves_height': 12
+            }
+        }, {'2022-05-20 15:00:00': {'wind_u': 1.13, 'wind_v': 2.2, 'gust': 2.91, 'waves_period': 4, 'waves_height': 6}}]
+        let block = document.querySelector('.wrapper__container__data')
+        count = 1
+
+        for (row of data) {
+            let clon = document.querySelector('.wrapper__container__data__block').cloneNode(true)
+            clon.querySelector('.wrapper__container__data__block__date p').innerHTML = Object.keys(row)[0]
+            clon.querySelector('.wind-u p').innerHTML = row[Object.keys(row)[0]].wind_u
+            clon.querySelector('.wind-v p').innerHTML = row[Object.keys(row)[0]].wind_v
+            clon.querySelector('.gust p').innerHTML = row[Object.keys(row)[0]].gust
+            clon.querySelector('.waves_period p').innerHTML = row[Object.keys(row)[0]].waves_period
+            clon.querySelector('.waves_height p').innerHTML = row[Object.keys(row)[0]].waves_height
+            clon.classList.toggle('d-none')
+            block.appendChild(clon)
+
+            setColor(row[Object.keys(row)[0]].wind_u, document.querySelectorAll('.wind-u-c')[count], 16, 18)
+            setColor(row[Object.keys(row)[0]].wind_v, document.querySelectorAll('.wind-v-c')[count], 16, 18)
+            setColor(row[Object.keys(row)[0]].gust, document.querySelectorAll('.gust-c')[count], 25, 40)
+            setColor(row[Object.keys(row)[0]].waves_period, document.querySelectorAll('.waves_period-c')[count], 5, 7)
+            setColor(row[Object.keys(row)[0]].waves_height, document.querySelectorAll('.waves_height-c')[count], 6, 8)
+            count++
+        }
+
+        let cursor = document.querySelector('.wrapper__container__data')
+        cursor.addEventListener('click', function (e) {
+
+            let block = e.target.parentElement.nextElementSibling
+            let arrow = e.target.parentElement.children[0]
+            if (block.style.display == 'block') {
+                block.style.display = 'none'
+                // arrow.style.transform = 'rotate(0deg)'
+            } else {
+                block.style.display = 'block'
+                // block.style.width='100%'
+                // arrow.style.transform = 'rotate(90deg)'
+            }
+        })
+    }
+
+    async function getInfo(imo) {
+        let data = await eel.getInfo(imo)()
+        infoBlock = document.querySelectorAll('.wrapper__container__map__about ul li')
+        infoBlock[0].innerHTML = "Coordinates: " + data[2] + ', ' + data[3]
+        infoBlock[1].innerHTML = "Speed: " + data[0]
+        infoBlock[2].innerHTML = "Course: " + data[1]
+    }
+
+    function initialize(imo) {
+        let frame = document.querySelector('iframe')
+        frame.src = `https://goradar.ru/vessels_map.php?imo=${imo}&is_widget=1`
+    }
+
+    mouseClick = 0
+    document.querySelectorAll('.wrapper__header__block button')[0].addEventListener('click', function () {
+        if (mouseClick == 0) {
+            let imo = document.querySelector('input').value
+            getInfo(imo)
+            showData(imo)
+            initialize(imo)
+            document.querySelector('.wrapper__container__map').style.display = 'block'
+            document.querySelectorAll('.wrapper__header__block button')[0].innerHTML = 'Update'
+            mouseClick++
+        } else {
+            document.querySelectorAll('.wrapper__header__block button')[0].innerHTML = 'show'
+            mouseClick--
+            location.reload()
+        }
+
+        setInterval(function () {
+            let imo = document.querySelector('input').value
+            getInfo(imo)
+            showData(imo)
+            initialize(imo)
+        }, 900000)
+    })
+
+    document.querySelectorAll('.wrapper__header__block button')[1].addEventListener('click', async function () {
+        let imo = document.querySelector('input').value
+        await eel.saveFile(imo)()
+    })
+
+
+</script>
+</html>
