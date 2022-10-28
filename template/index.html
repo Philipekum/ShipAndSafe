@@ -8,8 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Akshar:wght@500&family=Plus+Jakarta+Sans:wght@300&display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Akshar:wght@500&family=Plus+Jakarta+Sans:wght@300&display=swap" rel="stylesheet">
     <script src="eel.js"></script>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> -->
     <!-- <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script> -->
@@ -136,40 +135,7 @@
     }
 
     async function showData(imo) {
-        // let data = await eel.getWeather(imo)()
-        let data = [{
-            '2022-05-20 03:00:00': {
-                'wind_u': 26,
-                'wind_v': 0.85,
-                'gust': 41,
-                'waves_period': 5,
-                'waves_height': 10
-            }
-        }, {
-            '2022-05-20 06:00:00': {
-                'wind_u': 27,
-                'wind_v': -1.61,
-                'gust': 6.33,
-                'waves_period': 3,
-                'waves_height': 7
-            }
-        }, {
-            '2022-05-20 09:00:00': {
-                'wind_u': 17,
-                'wind_v': 1.37,
-                'gust': 10.13,
-                'waves_period': 1,
-                'waves_height': 3
-            }
-        }, {
-            '2022-05-20 12:00:00': {
-                'wind_u': -3.33,
-                'wind_v': 1.37,
-                'gust': 3.12,
-                'waves_period': 8,
-                'waves_height': 12
-            }
-        }, {'2022-05-20 15:00:00': {'wind_u': 1.13, 'wind_v': 2.2, 'gust': 2.91, 'waves_period': 4, 'waves_height': 6}}]
+        let data = await eel.get_weather(imo)()
         let block = document.querySelector('.wrapper__container__data')
         count = 1
 
@@ -194,22 +160,26 @@
 
         let cursor = document.querySelector('.wrapper__container__data')
         cursor.addEventListener('click', function (e) {
-
-            let block = e.target.parentElement.nextElementSibling
-            let arrow = e.target.parentElement.children[0]
-            if (block.style.display == 'block') {
-                block.style.display = 'none'
-                // arrow.style.transform = 'rotate(0deg)'
-            } else {
-                block.style.display = 'block'
-                // block.style.width='100%'
-                // arrow.style.transform = 'rotate(90deg)'
+            // console.log(e.target.tagName)
+            if (e.target.tagName == 'IMG'){
+                if(e.target.parentElement.nextElementSibling.className == 'wrapper__container__data__block__block'){
+                    let block = e.target.parentElement.nextElementSibling
+                    let arrow = e.target.parentElement.children[0]
+                    if (block.style.display == 'block') {
+                        block.style.display = 'none'
+                        arrow.style.transform = 'rotate(0deg)'
+                    } else {
+                        block.style.display = 'block'
+                        arrow.style.transform = 'rotate(90deg)'
+                    }
+                }
             }
         })
     }
 
     async function getInfo(imo) {
-        let data = await eel.getInfo(imo)()
+        let data = await eel.get_info(imo)()
+        console.log(data)
         infoBlock = document.querySelectorAll('.wrapper__container__map__about ul li')
         infoBlock[0].innerHTML = "Coordinates: " + data[2] + ', ' + data[3]
         infoBlock[1].innerHTML = "Speed: " + data[0]
@@ -224,26 +194,15 @@
     mouseClick = 0
     document.querySelectorAll('.wrapper__header__block button')[0].addEventListener('click', function () {
         if (mouseClick == 0) {
-            var InputValue = isNaN(document.getElementById("inputmain").value)
-            console.log(InputValue)
-            if(InputValue === false){
-                console.log()
-                var InputValueCheckInt = Number.isInteger(Number(document.getElementById("inputmain").value))
-                if(InputValueCheckInt === true){
-
-                let imo = document.querySelector('input').value
+            let imo = parseInt(document.querySelector('input').value)
+            // console.log(imo)
             getInfo(imo)
             showData(imo)
             initialize(imo)
             document.querySelector('.wrapper__container__map').style.display = 'block'
             document.querySelectorAll('.wrapper__header__block button')[0].innerHTML = 'Update'
             mouseClick++
-                }else{
-                    alert('IMO is not correct')
-                }
-            }else{
-                alert('IMO is not correct')
-            }
+            
         } else {
             document.querySelectorAll('.wrapper__header__block button')[0].innerHTML = 'show'
             mouseClick--
@@ -260,8 +219,16 @@
 
     document.querySelectorAll('.wrapper__header__block button')[1].addEventListener('click', async function () {
         let imo = document.querySelector('input').value
-        await eel.saveFile(imo)()
+        await eel.save_file(imo)()
     })
+    
+    // document.querySelectorAll('.wrapper__header__block button')[0].addEventListener('click', function () {
+    //     let imo = parseInt(document.querySelector('input').value)
+    //     getInfo(imo)
+    //     showData(imo)
+    //     initialize(imo)
+    //     document.querySelector('.wrapper__container__map').style.display = 'block'
+    // })
 
 
 </script>
